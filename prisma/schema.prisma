@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Member {
+  id                 String   @id @default(uuid())
+  name               String
+  profession         String
+  workingOrganiztion String
+  permanentAddress   String
+  currentAddress     String
+  skills             String[]
+  phone              String
+  email              String?  @unique
+  facebookProfile    String?
+  password           String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([profession])
+  @@index([skills])
+}
