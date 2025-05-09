@@ -8,21 +8,16 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model Member {
-  id                 String   @id @default(uuid())
-  name               String
-  profession         String
-  workingOrganiztion String
-  permanentAddress   String
-  currentAddress     String
-  skills             String[]
-  phone              String
-  email              String?  @unique
-  facebookProfile    String?
-  password           String
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-
-  @@index([profession])
-  @@index([skills])
+model User {
+  id              String   @id @default(cuid())
+  fullName        String
+  presentAddress  String
+  permanentAddress String
+  jobLocation     String
+  profession      String
+  helpDescription String
+  phoneNumber     String
+  email           String   @unique
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
