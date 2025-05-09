@@ -1,4 +1,3 @@
-import prisma from "@/lib/prisma"
 import UserList from "./user-list"
 import { Prisma } from "@prisma/client"
 
