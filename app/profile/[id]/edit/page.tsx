@@ -44,8 +44,7 @@ export default function EditProfilePage({ params }: { params: { id: string } }) 
         setFormData(data.user)
       } catch (error) {
         console.error("Error fetching user data:", error)
-        toast("Failed to load user data"
-        )
+        toast("Failed to load user data")
       } finally {
         setIsLoading(false)
       }
@@ -65,7 +64,7 @@ export default function EditProfilePage({ params }: { params: { id: string } }) 
     e.preventDefault()
 
     if (secretKey !== "786") {
-      toast( "The secret key you entered is incorrect.")
+      toast("The secret key you entered is incorrect.")
       return
     }
 
@@ -85,12 +84,12 @@ export default function EditProfilePage({ params }: { params: { id: string } }) 
         throw new Error(error.message || "Failed to update profile")
       }
 
-      toast( "Your profile has been updated successfully.")
+      toast("Your profile has been updated successfully.")
 
       router.push(`/profile/${params.id}`)
     } catch (error) {
       console.error("Update error:", error)
-      toast( error instanceof Error ? error.message : "Something went wrong")
+      toast(error instanceof Error ? error.message : "Something went wrong")
     } finally {
       setIsLoading(false)
     }

@@ -2,9 +2,10 @@ import { Suspense } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Toaster } from "@/components/ui/sonner"
 import UserList from "@/components/user-list"
 import SearchForm from "@/components/search-form"
+import { PencilIcon } from "lucide-react"
+import EditProfileButton from "@/components/editProfileButton"
 
 export default async function HomePage({
   searchParams,
@@ -16,21 +17,18 @@ export default async function HomePage({
 
   return (
     <div className="container mx-auto py-8 px-4">
-      <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-        <div className="">
-          <h1 className="text-3xl font-bold">Jashore Foundation Directory</h1>
+      {/* Header + Edit Profile */}
+      <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-8 text-center md:text-left">
+        <div className="w-full md:w-auto">
+          <h1 className="text-3xl font-bold">Jashore Foundation</h1>
           <p className="text-muted-foreground">Find community members by profession or name</p>
         </div>
-        <div className="flex gap-4">
-          <Link href="/register">
-            <Button>Register</Button>
-          </Link>
-          <Link href="/login">
-            <Button variant="outline">Login</Button>
-          </Link>
+        <div className="w-full md:w-auto">
+          <EditProfileButton />
         </div>
       </div>
 
+      {/* Search Form */}
       <Card className="mb-8">
         <CardHeader>
           <CardTitle>Search Members</CardTitle>
@@ -40,6 +38,7 @@ export default async function HomePage({
         </CardContent>
       </Card>
 
+      {/* User List */}
       <Suspense fallback={<div>Loading members...</div>}>
         <UserList search={search} profession={profession} />
       </Suspense>

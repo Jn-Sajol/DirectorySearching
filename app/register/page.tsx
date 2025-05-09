@@ -1,20 +1,26 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { toast } from 'sonner'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { toast } from "sonner";
 
 export default function RegisterPage() {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
-  const [secretKey, setSecretKey] = useState("")
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [secretKey, setSecretKey] = useState("");
   const [formData, setFormData] = useState({
     fullName: "",
     presentAddress: "",
@@ -24,25 +30,24 @@ export default function RegisterPage() {
     helpDescription: "",
     phoneNumber: "",
     email: "",
-  })
+  });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (secretKey !== "786") {
-      toast(
-        "The secret key you entered is incorrect."
-        
-      )
-      return
+      toast("The secret key you entered is incorrect.");
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
 
     try {
       const response = await fetch("/api/register", {
@@ -51,39 +56,51 @@ export default function RegisterPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Something went wrong")
+        throw new Error(data.message || "Something went wrong");
+      }
+      if (data.user?.id) {
+        localStorage.setItem("currentUserId", data.user.id);
       }
 
-      toast( "Your profile has been created successfully."
-      )
+      toast("Your profile has been created successfully.");
 
-      router.push("/")
+      router.push("/");
     } catch (error) {
-      console.error("Registration error:", error)
-      toast( error instanceof Error ? error.message : "Something went wrong")
+      console.error("Registration error:", error);
+      toast(error instanceof Error ? error.message : "Something went wrong");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="container mx-auto py-10 px-4">
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
-          <CardTitle className="text-2xl">Register with Jashore Foundation</CardTitle>
-          <CardDescription>Create your profile to connect with other community members</CardDescription>
+          <CardTitle className="text-2xl">
+            Register with Jashore Foundation
+          </CardTitle>
+          <CardDescription>
+            Create your profile to connect with other community members
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-4">
               <div>
                 <Label htmlFor="fullName">Full Name</Label>
-                <Input id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} required />
+                <Input
+                  id="fullName"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  required
+                />
               </div>
 
               <div>
@@ -109,7 +126,7 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <Label htmlFor="jobLocation">Job Location / Workplace</Label>
+                <Label htmlFor="jobLocation">Workplace and Job Location</Label>
                 <Input
                   id="jobLocation"
                   name="jobLocation"
@@ -121,11 +138,19 @@ export default function RegisterPage() {
 
               <div>
                 <Label htmlFor="profession">Profession</Label>
-                <Input id="profession" name="profession" value={formData.profession} onChange={handleChange} required />
+                <Input
+                  id="profession"
+                  name="profession"
+                  value={formData.profession}
+                  onChange={handleChange}
+                  required
+                />
               </div>
 
               <div>
-                <Label htmlFor="helpDescription">How you can help (short description)</Label>
+                <Label htmlFor="helpDescription">
+                  How you can help (short description)
+                </Label>
                 <Textarea
                   id="helpDescription"
                   name="helpDescription"
@@ -148,7 +173,14 @@ export default function RegisterPage() {
 
               <div>
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required />
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
               </div>
 
               <div>
@@ -168,15 +200,7 @@ export default function RegisterPage() {
             </Button>
           </form>
         </CardContent>
-        <CardFooter className="flex justify-center">
-          <p className="text-sm text-muted-foreground">
-            Already have an account?{" "}
-            <a href="/login" className="text-primary hover:underline">
-              Login
-            </a>
-          </p>
-        </CardFooter>
       </Card>
     </div>
-  )
+  );
 }

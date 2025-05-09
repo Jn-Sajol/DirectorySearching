@@ -1,34 +1,52 @@
 import { NextResponse } from "next/server"
 import prisma from "@/lib/prisma"
-import { supabase } from "@/lib/supabase"
 
-export async function POST(request: Request) {
+export async function GET(request: Request, { params }: { params: { id: string } }) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: params.id },
+    })
+
+    if (!user) {
+      return NextResponse.json({ message: "User not found" }, { status: 404 })
+    }
+
+    return NextResponse.json({ user })
+  } catch (error) {
+    console.error("Error fetching user:", error)
+    return NextResponse.json({ message: "Internal server error" }, { status: 500 })
+  }
+}
+
+export async function PUT(request: Request, { params }: { params: { id: string } }) {
   try {
     const body = await request.json()
     const { fullName, presentAddress, permanentAddress, jobLocation, profession, helpDescription, phoneNumber, email } =
       body
 
-    // Check if user already exists
+    // Check if user exists
     const existingUser = await prisma.user.findUnique({
-      where: { email },
+      where: { id: params.id },
     })
 
-    if (existingUser) {
-      return NextResponse.json({ message: "User with this email already exists" }, { status: 400 })
+    if (!existingUser) {
+      return NextResponse.json({ message: "User not found" }, { status: 404 })
     }
 
-    // Create user in Supabase (for authentication)
-    const { data: authData, error: authError } = await supabase.auth.signUp({
-      email,
-      password: `${fullName.replace(/\s+/g, "")}${phoneNumber.slice(-4)}`, // Simple password generation
-    })
+    // Check if email is already taken by another user
+    if (email !== existingUser.email) {
+      const emailExists = await prisma.user.findUnique({
+        where: { email },
+      })
 
-    if (authError) {
-      return NextResponse.json({ message: "Error creating authentication: " + authError.message }, { status: 500 })
+      if (emailExists) {
+        return NextResponse.json({ message: "Email is already taken by another user" }, { status: 400 })
+      }
     }
 
-    // Create user in Prisma database
-    const user = await prisma.user.create({
+    // Update user
+    const updatedUser = await prisma.user.update({
+      where: { id: params.id },
       data: {
         fullName,
         presentAddress,
@@ -41,9 +59,9 @@ export async function POST(request: Request) {
       },
     })
 
-    return NextResponse.json({ message: "User registered successfully", user }, { status: 201 })
+    return NextResponse.json({ user: updatedUser })
   } catch (error) {
-    console.error("Registration error:", error)
+    console.error("Error updating user:", error)
     return NextResponse.json({ message: "Internal server error" }, { status: 500 })
   }
 }

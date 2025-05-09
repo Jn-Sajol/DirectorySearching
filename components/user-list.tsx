@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { PhoneIcon, MailIcon, MapPinIcon, BriefcaseIcon } from "lucide-react"
+import { PhoneIcon, MailIcon, MapPinIcon, BriefcaseIcon, PencilIcon } from "lucide-react"
 
 interface UserListProps {
   search?: string
@@ -21,7 +21,7 @@ export default async function UserList({ search = "", profession = "" }: UserLis
     }
   }
 
-  if (profession) {
+  if (profession && profession !== "all") {
     where.profession = profession
   }
 
@@ -78,11 +78,19 @@ export default async function UserList({ search = "", profession = "" }: UserLis
                 {user.email}
               </a>
             </div>
-            <Link href={`/profile/${user.id}`} className="w-full mt-2">
-              <Button variant="outline" className="w-full">
-                View Profile
-              </Button>
-            </Link>
+            <div className="flex gap-2 w-full mt-2">
+              <Link href={`/profile/${user.id}`} className="flex-1">
+                <Button variant="outline" className="w-full">
+                  View Profile
+                </Button>
+              </Link>
+              {/* <Link href={`/profile/${user.id}/edit`}>
+                <Button variant="secondary" className="flex items-center gap-1">
+                  <PencilIcon className="h-4 w-4" />
+                  Edit
+                </Button>
+              </Link> */}
+            </div>
           </CardFooter>
         </Card>
       ))}

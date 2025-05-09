@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import prisma from "@/lib/prisma"
-import { PhoneIcon, MailIcon, MapPinIcon, BriefcaseIcon, HomeIcon, ArrowLeftIcon } from "lucide-react"
+import { PhoneIcon, MailIcon, MapPinIcon, BriefcaseIcon, HomeIcon, ArrowLeftIcon, PencilIcon } from "lucide-react"
 
 export default async function ProfilePage({ params }: { params: { id: string } }) {
   const user = await prisma.user.findUnique({
@@ -25,17 +25,21 @@ export default async function ProfilePage({ params }: { params: { id: string } }
       <Card className="max-w-3xl mx-auto">
         <CardHeader>
           <div className="flex flex-col md:flex-row justify-between items-start gap-4">
-            <div>
+            <div className="flex justify-between  items-center">
               <CardTitle className="text-3xl">{user.fullName}</CardTitle>
+</div>
               <div className="flex items-center gap-2 mt-2">
                 <Badge className="text-sm">{user.profession}</Badge>
               </div>
-            </div>
-            <div className="flex gap-2">
+            
+            {/* <div className="flex gap-2">
               <Link href={`/profile/${user.id}/edit`}>
-                <Button variant="outline">Edit Profile</Button>
+                <Button className="flex items-center gap-2">
+                  <PencilIcon className="h-4 w-4" />
+                  Edit Profile
+                </Button>
               </Link>
-            </div>
+            </div> */}
           </div>
         </CardHeader>
         <CardContent className="space-y-6">
