@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma"
 import UserList from "./user-list"
+import { Prisma } from "@prisma/client"
 
 interface UserListWrapperProps {
   search?: string
@@ -8,7 +9,7 @@ interface UserListWrapperProps {
 
 export default async function UserListWrapper({ search = "", profession = "" }: UserListWrapperProps) {
   // Build the where clause for Prisma query
-  const where: any = {}
+  const where: Prisma.UserWhereInput = {}
 
   if (search) {
     where.fullName = {
@@ -22,12 +23,12 @@ export default async function UserListWrapper({ search = "", profession = "" }: 
   }
 
   // Fetch users from the database
-  const users = await prisma.user.findMany({
-    where,
-    orderBy: {
-      fullName: "asc",
-    },
-  })
+  // const users = await prisma.user.findMany({
+  //   where,
+  //   orderBy: {
+  //     fullName: "asc",
+  //   },
+  // })
 
   return <UserList search={search} profession={profession} />
 
