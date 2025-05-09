@@ -3,7 +3,9 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { PhoneIcon, MailIcon, MapPinIcon, BriefcaseIcon, PencilIcon } from "lucide-react"
+import { PhoneIcon, MailIcon, MapPinIcon, BriefcaseIcon } from "lucide-react"
+import { Prisma } from "@prisma/client"
+
 
 interface UserListProps {
   search?: string
@@ -12,7 +14,7 @@ interface UserListProps {
 
 export default async function UserList({ search = "", profession = "" }: UserListProps) {
   // Build the where clause for Prisma query
-  const where: any = {}
+ const where: Prisma.UserWhereInput = {}
 
   if (search) {
     where.fullName = {

@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     }
 
     // Create user in Supabase (for authentication)
-    const { data: authData, error: authError } = await supabase.auth.signUp({
+    const { error: authError } = await supabase.auth.signUp({
       email,
       password: `${fullName.replace(/\s+/g, "")}${phoneNumber.slice(-4)}`, // Simple password generation
     })

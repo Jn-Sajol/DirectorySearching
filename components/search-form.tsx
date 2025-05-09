@@ -15,7 +15,6 @@ interface SearchFormProps {
 
 export default function SearchForm({ initialSearch = "", initialProfession = "" }: SearchFormProps) {
   const router = useRouter()
-  const searchParams = useSearchParams()
   const [search, setSearch] = useState(initialSearch)
   const [profession, setProfession] = useState(initialProfession)
   const [professions, setProfessions] = useState<string[]>([])

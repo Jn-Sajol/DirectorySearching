@@ -1,10 +1,7 @@
 import { Suspense } from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import UserList from "@/components/user-list"
 import SearchForm from "@/components/search-form"
-import { PencilIcon } from "lucide-react"
 import EditProfileButton from "@/components/editProfileButton"
 
 export default async function HomePage({
@@ -20,7 +17,7 @@ export default async function HomePage({
       {/* Header + Edit Profile */}
       <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-8 text-center md:text-left">
         <div className="w-full md:w-auto">
-          <h1 className="text-3xl font-bold">Jashore Foundation</h1>
+          <h1 className="text-3xl font-bold ">Jashore Foundation</h1>
           <p className="text-muted-foreground">Find community members by profession or name</p>
         </div>
         <div className="w-full md:w-auto">

@@ -29,5 +29,6 @@ export default async function UserListWrapper({ search = "", profession = "" }: 
     },
   })
 
-  return <UserList users={users} />
+  return <UserList search={search} profession={profession} />
+
 }

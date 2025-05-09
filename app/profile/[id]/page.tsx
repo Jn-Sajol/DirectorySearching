@@ -1,10 +1,9 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import prisma from "@/lib/prisma"
-import { PhoneIcon, MailIcon, MapPinIcon, BriefcaseIcon, HomeIcon, ArrowLeftIcon, PencilIcon } from "lucide-react"
+import { PhoneIcon, MailIcon, MapPinIcon, BriefcaseIcon, HomeIcon, ArrowLeftIcon} from "lucide-react"
 
 export default async function ProfilePage({ params }: { params: { id: string } }) {
   const user = await prisma.user.findUnique({
