@@ -2,12 +2,15 @@
   "name": "jashore-foundation",
   "version": "0.1.0",
   "private": true,
+ 
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
+  "dev": "next dev",
+  "build": "npx prisma generate && next build",
+  "start": "next start",
+  "lint": "next lint",
+  "postinstall": "npx prisma generate"
+},
+
   "dependencies": {
     "@faker-js/faker": "^9.6.0",
     "@hookform/resolvers": "^4.1.3",
