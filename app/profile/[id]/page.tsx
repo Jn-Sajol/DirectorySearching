@@ -31,14 +31,7 @@ export default async function ProfilePage({ params }: { params: { id: string } }
                 <Badge className="text-sm">{user.profession}</Badge>
               </div>
             
-            {/* <div className="flex gap-2">
-              <Link href={`/profile/${user.id}/edit`}>
-                <Button className="flex items-center gap-2">
-                  <PencilIcon className="h-4 w-4" />
-                  Edit Profile
-                </Button>
-              </Link>
-            </div> */}
+          
           </div>
         </CardHeader>
         <CardContent className="space-y-6">

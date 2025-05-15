@@ -32,8 +32,48 @@ export default function RegisterPage() {
     email: "",
   });
 
+ const professionOptions = [
+  "Student",
+  "Doctor",
+  "Software Engineer",
+  "Civil Engineer",
+  "Electrical Engineer",
+  "Mechanical Engineer",
+  "Electronics Engineer",
+  "Computer Engineer",
+  "Teacher",
+  "Lawyer",
+  "Government Employee",
+  "Business Owner",
+  "Freelancer",
+  "Accountant",
+  "Banker",
+  "Nurse",
+  "Journalist",
+  "Architect",
+  "Marketer",
+  "Social Worker",
+  "Chemist",
+  "Pharmacist",
+  "Researcher",
+  "Psychologist",
+  "Scientist",
+  "Technician",
+  "Electrician",
+  "Driver",
+  "Cook",
+  "Farmer",
+  "Musician",
+  "Artist",
+  "Photographer",
+  "Writer",
+  "Tailor",
+  "Plumber",
+];
+
+
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -126,7 +166,7 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <Label htmlFor="jobLocation">Workplace and Job Location</Label>
+                <Label htmlFor="jobLocation">Job Institution Name and Place</Label>
                 <Input
                   id="jobLocation"
                   name="jobLocation"
@@ -136,20 +176,29 @@ export default function RegisterPage() {
                 />
               </div>
 
+              {/* Profession Dropdown */}
               <div>
                 <Label htmlFor="profession">Profession</Label>
-                <Input
+                <select
                   id="profession"
                   name="profession"
                   value={formData.profession}
                   onChange={handleChange}
                   required
-                />
+                  className="w-full border rounded p-2"
+                >
+                  <option value="">Select Profession</option>
+                  {professionOptions.map((profession) => (
+                    <option key={profession} value={profession}>
+                      {profession}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div>
                 <Label htmlFor="helpDescription">
-                  How you can help (short description)
+                 Describe who are you and How you can help others
                 </Label>
                 <Textarea
                   id="helpDescription"
@@ -195,7 +244,7 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button  type="submit" className="w-full cursor-pointer" disabled={isLoading}>
               {isLoading ? "Registering..." : "Register"}
             </Button>
           </form>

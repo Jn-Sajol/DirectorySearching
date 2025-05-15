@@ -82,7 +82,7 @@ export default async function UserList({ search = "", profession = "" }: UserLis
             </div>
             <div className="flex gap-2 w-full mt-2">
               <Link href={`/profile/${user.id}`} className="flex-1">
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full cursor-pointer">
                   View Profile
                 </Button>
               </Link>

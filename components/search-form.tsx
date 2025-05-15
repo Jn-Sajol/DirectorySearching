@@ -74,8 +74,8 @@ export default function SearchForm({ initialSearch = "", initialProfession = "" 
       </Select>
 
       <div className="flex gap-2">
-        <Button type="submit">Search</Button>
-        <Button type="button" variant="outline" onClick={handleReset}>
+        <Button className="cursor-pointer" type="submit">Search</Button>
+        <Button className="cursor-pointer" type="button" variant="outline" onClick={handleReset}>
           Reset
         </Button>
       </div>
